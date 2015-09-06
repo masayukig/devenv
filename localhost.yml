@@ -1,12 +1,17 @@
 ---
 - hosts: localhost
   connection: local
-  sudo: yes
 
   tasks:
+    - git: repo=git@github.com:masayukig/dotfiles dest=~/dotfiles accept_hostkey=yes update=no
     - name: install packages
+      sudo: yes
       apt: pkg={{ item }} state=latest
       with_items:
       - vim
       - git
+      - etckeeper
       - dphys-swapfile
+    - copy: src=/usr/share/doc/git/contrib/diff-highlight/diff-highlight dest=~/bin/ owner=igawa group=igawa mode=0755
+    - git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/vundle
+    - git: repo=https://github.com/tomasr/molokai.git dest=~/.vim/bundle/molokai

@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  sudo: yes
+
+  tasks:
+    - name: install packages
+      apt: pkg={{ item }} state=latest
+      with_items:
+      - vim
+      - git
+      - dphys-swapfile
